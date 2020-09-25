@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'streams/list'
+    redirectTo: 'tasks-jobs/tasks/create'
   }
 ];
 @NgModule({
