@@ -14,29 +14,6 @@ export class SecurityGuard implements CanActivate {
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const rolesNeeded: string[] = route.data.roles;
-    const featureNeeded: string = route.data.feature;
-    if (featureNeeded) {
-      if (await this.aboutService.isFeatureEnabled(featureNeeded) === false) {
-        this.router.navigate(['feature-disabled']);
-      }
-    }
-
-    const canAccess = await this.securityService.canAccess(rolesNeeded);
-    if (canAccess) {
-      return true;
-    }
-    const securityEnabled = await this.securityService.securityEnabled().pipe(take(1)).toPromise();
-    if (securityEnabled) {
-      const loggedInUser = await this.securityService.loggedinUser().pipe(take(1)).toPromise();
-      if (loggedInUser) {
-        this.router.navigate(['roles-missing']);
-      } else {
-        this.router.navigate(['authentication-required']);
-      }
-    } else {
-      return true;
-    }
-    return false;
+    return true;
   }
 }

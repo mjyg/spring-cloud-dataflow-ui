@@ -48,8 +48,7 @@ export class TaskService {
   createTask(name: string, definition: string, description: string): Observable<any> {
     const params = new HttpParams({ encoder: new DataflowEncoder() })
       .append('definition', definition)
-      .append('name', name)
-      .append('description', description);
+      .append('name', name);
     const headers = HttpUtils.getDefaultHttpHeaders();
     return this.httpClient
       .post('/tasks/definitions', {}, { headers, params })

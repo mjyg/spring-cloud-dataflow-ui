@@ -45,12 +45,8 @@ export class CreateComponent implements OnInit {
   }
 
   submit() {
-    // if (!this.form.valid) {
-    //   this.notificationService.error('An error occurred.', 'Some field(s) are missing or invalid.');
-    // } else {
     this.isCreating = true;
-    this.taskService.createTask(this.taskName.value, this.dsl, this.taskDescription.value)
-      // .pipe(takeUntil(this.ngUnsubscribe$), finalize(() => this.blockerService.unlock()))
+    this.taskService.createTask(this.taskName.value, this.dsl, '')
       .subscribe(
         () => {
           this.notificationService.success('Task creation', 'Composed task created for ' + this.taskName.value);
@@ -87,18 +83,21 @@ export class CreateComponent implements OnInit {
   }
 
   createTask() {
-    if (!this.flo.dsl || !this.flo.dsl.trim()) {
-      this.notificationService.error('An error occurred', 'Please, enter a valid task.');
-      return;
-    }
-    this.taskName.setValue('');
-    this.taskDescription.setValue('');
-    this.dsl = this.flo.dsl;
-    this.isOpen = true;
+    this.taskService.createTask(window.location.search.substring(10), this.flo.dsl, '')
+        .subscribe(
+            () => {
+              this.notificationService.success('Task creation', 'Composed task created for ' + this.taskName.value);
+              this.back();
+            },
+            (error) => {
+              this.isCreating = false;
+              this.notificationService.error('An error occurred', error);
+            }
+        );
   }
 
   back() {
-    this.router.navigateByUrl('tasks-jobs/tasks');
+    window.close();
   }
 
 }
