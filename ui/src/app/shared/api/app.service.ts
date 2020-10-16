@@ -32,7 +32,7 @@ export class AppService {
       params = params.append('defaultVersion', 'true');
     }
     return this.httpClient
-      .get('/apps', { headers, params })
+      .post('/batch/getApplicationList', { headers }) // 请求job列表
       .pipe(
         map(AppPage.parse),
         catchError(ErrorUtils.catchError)
